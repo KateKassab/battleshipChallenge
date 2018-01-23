@@ -1,0 +1,8 @@
+#grid {
+  border-style: solid;
+  border-width: medium;
+  padding: 30px;
+}
+#row{
+  background-color: cornsilk;
+}
