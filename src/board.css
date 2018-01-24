@@ -1,21 +1,42 @@
-.grid {
+
+
+.cell {
   border-style: solid;
   border-width: medium;
   padding: 30px;
+  align: center;
 }
-/* #row{
-  background-color: cornsilk;
-} */
 
- #hit{
-  background-color: red;
+.hit {
+    background: url("bino.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
-#miss{
-  background-color: blue;
+
+.miss {
+    background: url("dorito.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: solid;
 }
-.green{
-  background-color: green;
+
+.body {
+  /* align-content: center; */
 }
-.blue{
-  background-color: blue;
+
+#table {
+  margin: auto;
+  background-image: url("potato.jpg");
+  border-collapse: collapse;
+}
+
+#table td {
+  height: 75px;
+  width: 75px;
+}
+
+.row {
+
 }

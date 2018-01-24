@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import './board.css'; //links our CSS file
 import Counter from './counter.js'
 
-const ship = '' //sets a global const; used for a placeholder for ships location
+const EMPTY = 0
+const SHIP = 1
+const MISS = 2
+const HIT = 3
 
 class Board extends Component { //begin class
   constructor(props) {
@@ -17,38 +20,15 @@ class Board extends Component { //begin class
     this.setUpBoard()
     this.fiveShips()
   }
-  renderRow(rowNumber) { //creates one row
-    var Row = []
-
-    for(var row = 0; row < 10; row++) {
-
-
-      if(this.state.board[rowNumber][row]===ship) {
-        Row.push(<td className="grid" onClick={this.handleClick.bind(this, row, rowNumber )} >{ship}</td>)
-      } else {
-          Row.push(<td className="grid" onClick={this.handleClick.bind(this, row, rowNumber )}>{}</td>)
-      }
-    }
-    return Row
-  }
-
-  renderRows() { //creates ten rows
-    var rows = []
-
-    for(var row = 0; row < 10; row++) {
-      rows.push(<tr id="row" >{this.renderRow(row)}</tr>)
-    }
-    return rows
-  }
 
   setUpBoard() { //empty array inside of board
     let board = []
 
-    for(var row = 0; row < 10; row++) {
-      board[row] = []
+    for(var col = 0; col < 10; col++) {
+      board[col] = []
 
-      for(var col = 0; col < 10; col++) {
-        board[row][col] = 0
+      for(var row = 0; row < 10; row++) {
+        board[col][row] = EMPTY
       }
     }
 
@@ -61,7 +41,7 @@ class Board extends Component { //begin class
     var row = Math.floor(Math.random() * 10)
     var col = Math.floor(Math.random() * 10)
 
-    this.state.board[row][col] = ship
+    this.state.board[col][row] = SHIP
   }
 
   fiveShips() { //places five random ships on the board
@@ -70,35 +50,83 @@ class Board extends Component { //begin class
     }
   }
 
-  // //begins function for onclick change
-  handleClick(x,y,e) {
-    if(this.state.board[x][y] === ship) {
-      e.target.className="green"
+  // begins function for onclick change
+  handleClick(x, y, e) {
+    console.log(e.target);
+
+    const { board, counter } = this.state
+
+    if(board[x][y] === SHIP) {
+      e.target.className="cell hit"
       // alert("ya got it");
     } else {
-        e.target.className="blue"
+      e.target.className="cell miss"
       // alert("uh nope");
     }
 
-    if(this.state.counter <= 0) {
-      alert("you lose")
+    if(counter <= 0) {
+      alert("uhhhn you lose");
     } else {
       // this.setState.counter-=1
       this.setState({
-        counter: this.state.counter-1
+      counter: counter-1
       })
 
-      console.log(this.state.counter)
+      console.log(board);
+
+      console.log(counter)
     }
+  }
+
+  renderCol(col) { //creates one row
+    var Col = []
+
+    for(var row = 0; row < 10; row++) {
+
+
+      if(this.state.board[col][row]===SHIP) {
+        Col.push(<td
+            key={col + '_' + row}
+            className="cell"
+            onClick={this.handleClick.bind(this, col, row)}>
+            {SHIP}
+        </td>)
+      } else {
+          Col.push(<td
+            key={col + '_' + row}
+            className="cell"
+            onClick={this.handleClick.bind(this, col, row)}>
+            {""}
+        </td>)
+      }
+    }
+    return Col
+  }
+
+  renderRows(row) { //creates ten rows
+    var rows = []
+
+    for(var row = 0; row < 10; row++) {
+      rows.push(<tr
+            key={row}
+            className="row" >
+            {this.renderCol(row)}
+        </tr>)
+    }
+
+
+    return rows
   }
 
   render() { //renders our grid
     return(
       <div>
         <table id="table">
-          {this.renderRows()}
+          <tbody>
+            {this.renderRows()}
+          </tbody>
         </table>
-        <Counter />
+        <Counter  counter = {this.state.counter} />
       </div>
     )
   }
