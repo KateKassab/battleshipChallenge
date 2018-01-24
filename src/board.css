@@ -1,8 +1,21 @@
-#grid {
+.grid {
   border-style: solid;
   border-width: medium;
   padding: 30px;
 }
-#row{
+/* #row{
   background-color: cornsilk;
+} */
+
+ #hit{
+  background-color: red;
+}
+#miss{
+  background-color: blue;
+}
+.green{
+  background-color: green;
+}
+.blue{
+  background-color: blue;
 }
