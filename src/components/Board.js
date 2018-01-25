@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './board.css'; //links our CSS file
+import '../board.css'; //links our CSS file
 import Counter from './counter.js'
+import Square from './square.js'
 
 const EMPTY = 0
 const SHIP = 1
@@ -13,8 +14,8 @@ class Board extends Component { //begin class
 
     this.state={ //begins state
       board: [], //sets board to an empty array
-      bgColor: '',
-      counter: 25
+      torpedosLeft: 25,
+      torpedosUsed: 0
     }
 
     this.setUpBoard()
@@ -51,30 +52,30 @@ class Board extends Component { //begin class
   }
 
   // begins function for onclick change
-  handleClick(x, y, e) {
-    console.log(e.target);
+  handleClick(x, y) {
+    // console.log(e.target);
 
-    const { board, counter } = this.state
+    const { board, torpedosLeft, torpedosUsed } = this.state
 
     if(board[x][y] === SHIP) {
-      e.target.className="cell hit"
-      // alert("ya got it");
+      <div className="cell hit">
+      {alert("ya got it")}
+      </div>
     } else {
-      e.target.className="cell miss"
-      // alert("uh nope");
+      <div className="cell miss">
+        {alert("uh nope")}
+      </div>
     }
 
-    if(counter <= 0) {
+    if(torpedosLeft <= 0) {
       alert("uhhhn you lose");
     } else {
-      // this.setState.counter-=1
+      // this.setState.torpedosLeft-=1
       this.setState({
-      counter: counter-1
+      torpedosLeft: torpedosLeft-1,
+      torpedosUsed: torpedosUsed+1
       })
-
-      console.log(board);
-
-      console.log(counter)
+      console.log(torpedosLeft)
     }
   }
 
@@ -85,19 +86,22 @@ class Board extends Component { //begin class
 
 
       if(this.state.board[col][row]===SHIP) {
-        Col.push(<td
+        Col.push(<Square
+            id='hit'
             key={col + '_' + row}
             className="cell"
-            onClick={this.handleClick.bind(this, col, row)}>
-            {SHIP}
-        </td>)
+            onClick={this.handleClick.bind(this, col, row)}
+
+
+        />)
       } else {
-          Col.push(<td
+          Col.push(<Square
+            id='miss'
             key={col + '_' + row}
             className="cell"
-            onClick={this.handleClick.bind(this, col, row)}>
-            {""}
-        </td>)
+            onClick={this.handleClick.bind(this, col, row)}
+
+        />)
       }
     }
     return Col
@@ -111,6 +115,7 @@ class Board extends Component { //begin class
             key={row}
             className="row" >
             {this.renderCol(row)}
+
         </tr>)
     }
 
@@ -126,7 +131,10 @@ class Board extends Component { //begin class
             {this.renderRows()}
           </tbody>
         </table>
-        <Counter  counter = {this.state.counter} />
+        <Counter
+          torpedosLeft = {this.state.torpedosLeft}
+          torpedosUsed = {this.state.torpedosUsed}
+          />
       </div>
     )
   }

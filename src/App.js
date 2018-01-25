@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Board from './Board.js'
-import Counter from './counter.js'
+import Board from './components/Board'
+import Counter from './components/counter'
+import Square from './components/square'
 
 import {
   PageHeader

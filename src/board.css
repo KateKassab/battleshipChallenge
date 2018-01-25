@@ -7,7 +7,7 @@
   align: center;
 }
 
-.hit {
+.hit{
     background: url("bino.gif");
     background-size: contain;
     background-repeat: no-repeat;
@@ -22,21 +22,15 @@
     border: solid;
 }
 
-.body {
-  /* align-content: center; */
-}
-
 #table {
   margin: auto;
   background-image: url("potato.jpg");
   border-collapse: collapse;
+  border-style: solid;
 }
 
 #table td {
   height: 75px;
   width: 75px;
-}
-
-.row {
-
+  border-style: solid;
 }
