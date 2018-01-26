@@ -33,8 +33,6 @@ class Board extends Component { //begin class
       }
     }
 
-    console.log(board);
-
     this.state.board = board
   }
 
@@ -52,19 +50,13 @@ class Board extends Component { //begin class
   }
 
   // begins function for onclick change
-  handleClick(x, y) {
-    // console.log(e.target);
-
+  handleClick(row, col) {
     const { board, torpedosLeft, torpedosUsed } = this.state
 
-    if(board[x][y] === SHIP) {
-      <div className="cell hit">
-      {alert("ya got it")}
-      </div>
+    if(board[row][col] === SHIP) {
+      board[row][col] = HIT
     } else {
-      <div className="cell miss">
-        {alert("uh nope")}
-      </div>
+      board[row][col] = MISS
     }
 
     if(torpedosLeft <= 0) {
@@ -72,37 +64,37 @@ class Board extends Component { //begin class
     } else {
       // this.setState.torpedosLeft-=1
       this.setState({
-      torpedosLeft: torpedosLeft-1,
-      torpedosUsed: torpedosUsed+1
+        torpedosLeft: torpedosLeft-1,
+        torpedosUsed: torpedosUsed+1
       })
-      console.log(torpedosLeft)
     }
   }
 
-  renderCol(col) { //creates one row
+  renderCol(row) { //creates one row
+    const { board } = this.state
+
     var Col = []
 
-    for(var row = 0; row < 10; row++) {
+    for(var col = 0; col < 10; col++) {
+      let cellId = row + '_' + col
+      let status = ""
 
-
-      if(this.state.board[col][row]===SHIP) {
-        Col.push(<Square
-            id='hit'
-            key={col + '_' + row}
-            className="cell"
-            onClick={this.handleClick.bind(this, col, row)}
-
-
-        />)
-      } else {
-          Col.push(<Square
-            id='miss'
-            key={col + '_' + row}
-            className="cell"
-            onClick={this.handleClick.bind(this, col, row)}
-
-        />)
+      if(board[row][col] === HIT) {
+        status = "hit"
+      } else if (board[row][col] === MISS){
+        status = "miss"
+      } else{
+        status = ""
       }
+
+      Col.push(
+        <Square
+          key={cellId}
+          status={status}
+          onClick={this.handleClick.bind(this, row, col)}
+          value={board[row][col]}
+        />
+      )
     }
     return Col
   }
@@ -113,9 +105,8 @@ class Board extends Component { //begin class
     for(var row = 0; row < 10; row++) {
       rows.push(<tr
             key={row}
-            className="row" >
+            className="row">
             {this.renderCol(row)}
-
         </tr>)
     }
 

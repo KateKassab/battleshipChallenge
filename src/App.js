@@ -2,18 +2,16 @@ import React, { Component } from 'react';
 import Board from './components/Board'
 import Counter from './components/counter'
 import Square from './components/square'
+import './board.css';
 
-import {
-  PageHeader
-} from 'react-bootstrap'
 
 class App extends Component {
   render() {
     return (
       <div>
-        <PageHeader>
+        <h1>
           BATTLECHIP
-        </PageHeader>
+        </h1>
         <Board className="board" />
       </div>
     );

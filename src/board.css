@@ -1,4 +1,6 @@
-
+.h1 {
+  text-align: center;
+}
 
 .cell {
   border-style: solid;
@@ -7,7 +9,7 @@
   align: center;
 }
 
-.hit{
+.hit {
     background: url("bino.gif");
     background-size: contain;
     background-repeat: no-repeat;

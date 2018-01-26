@@ -6,22 +6,16 @@ import '../board.css';
 export default class Square extends React.Component {
   constructor(props){
     super(props)
-      // this.state = {
-      //   col:[y],
-      //   row:[x]
-      // }
   }
-  render(){
-    // if(handleClick() === this.props.EMPTY){
-    //   this.props.Col.push(this.props.MISS)
-    // }
+
+  render() {
+    const { status, onClick, value } = this.props
 
     return(
       <td
-        onClick={this.props.onClick}>
-        {this.props.cellID}
-        {this.props.col}
-        {this.props.row}
+        className={status}
+        onClick={onClick}>
+        {value}
       </td>
     )
   }
