@@ -11,7 +11,7 @@
 
 .hit {
     background: url("bino.gif");
-    background-size: contain;
+    background-size: 150px;
     background-repeat: no-repeat;
     background-position: center;
 }

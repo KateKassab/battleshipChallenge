@@ -12,10 +12,12 @@ class Board extends Component { //begin class
   constructor(props) {
     super(props)
 
+    const { maxTorpedoes } = this.props
+
     this.state={ //begins state
       board: [], //sets board to an empty array
-      torpedosLeft: 25,
-      torpedosUsed: 0
+      torpedosLeft: maxTorpedoes,
+      shipsLeft: 5
     }
 
     this.setUpBoard()
@@ -34,6 +36,7 @@ class Board extends Component { //begin class
     }
 
     this.state.board = board
+    console.log(board)
   }
 
   placeShips() { //will randomly place ships on the grid
@@ -51,23 +54,28 @@ class Board extends Component { //begin class
 
   // begins function for onclick change
   handleClick(row, col) {
-    const { board, torpedosLeft, torpedosUsed } = this.state
 
-    if(board[row][col] === SHIP) {
+    let { board, torpedosLeft, torpedosUsed, shipsLeft } = this.state
+
+    if(board[row][col] === SHIP && torpedosLeft > 0) {
       board[row][col] = HIT
-    } else {
-      board[row][col] = MISS
-    }
 
-    if(torpedosLeft <= 0) {
-      alert("uhhhn you lose");
-    } else {
-      // this.setState.torpedosLeft-=1
+      this.setState({
+        shipsLeft: shipsLeft-1,
+        torpedosLeft: torpedosLeft-1,
+        torpedosUsed: torpedosUsed+1
+      })
+    } else if (board[row][col] === EMPTY && torpedosLeft > 0) {
+      board[row][col] = MISS
       this.setState({
         torpedosLeft: torpedosLeft-1,
         torpedosUsed: torpedosUsed+1
       })
     }
+
+    this.setState({
+
+    })
   }
 
   renderCol(row) { //creates one row
@@ -115,6 +123,13 @@ class Board extends Component { //begin class
   }
 
   render() { //renders our grid
+    const { torpedosLeft, shipsLeft } = this.state
+    const { maxTorpedoes } = this.props
+
+    if(torpedosLeft === 0 || shipsLeft === 0) {
+      return (<h1>Game Over!!</h1>)
+    }
+
     return(
       <div>
         <table id="table">
@@ -123,14 +138,14 @@ class Board extends Component { //begin class
           </tbody>
         </table>
         <Counter
-          torpedosLeft = {this.state.torpedosLeft}
-          torpedosUsed = {this.state.torpedosUsed}
+          shipsLeft = { shipsLeft }
+          torpedosLeft = { torpedosLeft }
+          torpedosUsed = { maxTorpedoes - torpedosLeft }
           />
+          
       </div>
     )
   }
 }
-
-
 
 export default Board;

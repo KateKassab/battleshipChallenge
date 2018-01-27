@@ -12,7 +12,7 @@ class App extends Component {
         <h1>
           BATTLECHIP
         </h1>
-        <Board className="board" />
+        <Board className="board" maxTorpedoes={10} />
       </div>
     );
   }
